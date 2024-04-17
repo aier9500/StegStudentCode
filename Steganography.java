@@ -95,4 +95,6 @@ public class Steganography {
 	public static boolean canHide(Picture source, Picture secret) {
         return (source.getWidth() >= secret.getWidth() && source.getHeight() >= secret.getHeight());
 	}
+
+
 }
