@@ -83,12 +83,12 @@ public class Steganography {
 
 		Picture copy = new Picture(hidden); 
 		Pixel[][] pixels = copy.getPixels2D();
-		Pixel[][] source = hidden.getPixels2D();
+		// Pixel[][] source = hidden.getPixels2D();
 
 		for (int r = 0; r < pixels.length; r++) {
 
 			for (int c = 0; c < pixels[0].length; c++) {
-				Color col = source[r][c].getColor();
+				// Color col = source[r][c].getColor();
 				pixels[r][c].setRed(pixels[r][c].getRed() - ((pixels[r][c].getRed() / 64) * 64) + ((pixels[r][c].getRed() % 4) * 64));
 				pixels[r][c].setGreen(pixels[r][c].getGreen() - ((pixels[r][c].getGreen() / 64) * 64) + ((pixels[r][c].getGreen() % 4) * 64));
 				pixels[r][c].setBlue(pixels[r][c].getBlue() - ((pixels[r][c].getBlue() / 64) * 64) + ((pixels[r][c].getBlue() % 4) * 64));
@@ -170,6 +170,7 @@ public class Steganography {
 
 	public static void main(String[] args) {
 
+		
         Picture beach = new Picture("beach.jpg");
         beach.explore();
         Picture copy = testClearLow(beach);
@@ -190,8 +191,8 @@ public class Steganography {
 		f1.explore();
 		Picture f2 = new Picture("flower2.jpg");
 		hidePicture(f1, f2).explore();
-
-		// Sample code from
+		
+		
 		Picture beacher = new Picture("beach.jpg");
 		Picture robot = new Picture("robot.jpg");
 		Picture flower1 = new Picture("flower1.jpg");
