@@ -228,6 +228,58 @@ public class Steganography {
 	}
 
 
+	/**
+	 * Circles area where the two images are not the same
+	 * @param pic1
+	 * @param pic2
+	 * @return
+	 */
+
+	public static Picture showDifferentArea(Picture pic1, ArrayList<Point> arr) {
+
+		Picture newPic = new Picture(pic1);
+		Pixel[][] newPix = newPic.getPixels2D();
+		Point begin = arr.getFirst();
+		Point end = arr.getLast();
+		int length = end.getX() - begin.getX();
+		int height = end.getY() - begin.getY();
+
+		// Draws top line
+		for (int i = 0; i < length; i++) {
+
+			newPix[begin.getY()][begin.getX() + i].setRed(255);
+			newPix[begin.getY()][begin.getX() + i].setGreen(0);
+			newPix[begin.getY()][begin.getX() + i].setBlue(0);
+		}
+
+		// Draws bottom line
+		for (int i = 0; i < length; i++) {
+
+			newPix[end.getY()][begin.getX() + i].setRed(255);
+			newPix[end.getY()][begin.getX() + i].setGreen(0);
+			newPix[end.getY()][begin.getX() + i].setBlue(0);
+		}
+
+		// Draws left line
+		for (int i = 0; i < height; i++) {
+
+			newPix[begin.getY() + i][begin.getX()].setRed(255);
+			newPix[begin.getY() + i][begin.getX()].setGreen(0);
+			newPix[begin.getY() + i][begin.getX()].setBlue(0);
+		}
+
+		// Draws right line
+		for (int i = 0; i < height; i++) {
+
+			newPix[begin.getY() + i][end.getX()].setRed(255);
+			newPix[begin.getY() + i][end.getX()].setGreen(0);
+			newPix[begin.getY() + i][end.getX()].setBlue(0);
+		}
+
+
+		return newPic;
+	}
+
 	public static void main(String[] args) {
 
 		
@@ -287,6 +339,22 @@ public class Steganography {
 		System.out.println("Pointlist after hiding a picture has a size of " + pointList.size());
 		arch.show();
 		arch2.show(); 
+
+		// Following tests showDifferentArea()
+		Picture hall = new Picture("femaleLionAndHall.jpg");
+		Picture robot2 = new Picture("robot.jpg");
+		Picture flower2 = new Picture("flower1.jpg");
+		// hide pictures
+		Picture hall2 = hidePicture(hall, robot2, 50, 300);
+		Picture hall3 = hidePicture(hall2, flower2, 115, 275);
+		hall3.explore();
+		if (!isSame(hall, hall3)) {
+
+			Picture hall4 = showDifferentArea(hall, findDifferences(hall, hall3));
+			hall4.show();
+			Picture unhiddenHall3 = revealPicture(hall3);
+			unhiddenHall3.show();
+		}
     }
 }
 
