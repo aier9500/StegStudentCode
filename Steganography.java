@@ -168,6 +168,33 @@ public class Steganography {
 	}
 
 
+	/**
+	 * 
+	 * @param pic1
+	 * @param pic2
+	 * @return if the two pictures are exactly the same
+	 */
+
+	public static boolean isSame(Picture pic1, Picture pic2) {
+
+		Pixel[][] pix1 = pic1.getPixels2D();
+		Pixel[][] pix2 = pic2.getPixels2D();
+
+		for (int row = 0; row < pix1.length; row++) {
+
+			for (int col = 0; col < pix1[row].length; col++) {
+
+				if (!pix1[row][col].getColor().equals(pix2[row][col].getColor())) {
+					
+					return false;
+				}
+			}
+		}
+
+		return true; 
+	}
+
+
 	public static void main(String[] args) {
 
 		
@@ -204,5 +231,12 @@ public class Steganography {
 		Picture unhidden = revealPicture(hidden2);
 		unhidden.explore();
 
+
+		// Following tests isSame()
+		Picture swan = new Picture("swan.jpg");
+		Picture swan2 = new Picture("swan.jpg");
+		System.out.println("Swan and swan2 are the same: " + isSame(swan, swan2)); // should return true
+		swan = testClearLow(swan);
+		System.out.println("Swan and swan2 are the same (after clearLow run on swan): " + isSame(swan, swan2)); // should return false
     }
 }
