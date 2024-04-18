@@ -2,6 +2,7 @@
 // S23: Steganography Lab A1
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  * Clear the lower (rightmost) two bits in a pixel.
@@ -195,6 +196,38 @@ public class Steganography {
 	}
 
 
+	/**
+	 * @prerequisite the sizes of the two images are the same
+	 * @param pic1
+	 * @param pic2
+	 * @return an array with the pixels that are different
+	 */
+	public static ArrayList<Point> findDifferences(Picture pic1, Picture pic2) {
+
+		Pixel[][] pix1 = pic1.getPixels2D();
+		Pixel[][] pix2 = pic2.getPixels2D();
+		ArrayList<Point> pointList = new ArrayList<Point>(); 
+
+		if (!canHide(pic1, pic2)) {
+
+			return pointList;
+		}
+
+		for (int row = 0; row < pix1.length; row++) {
+
+			for (int col = 0; col < pix1[row].length; col++) {
+
+				if (!pix1[row][col].getColor().equals(pix2[row][col].getColor())) {
+
+					pointList.add(new Point(col, row));
+				}
+			}
+		}
+
+		return pointList;
+	}
+
+
 	public static void main(String[] args) {
 
 		
@@ -238,5 +271,58 @@ public class Steganography {
 		System.out.println("Swan and swan2 are the same: " + isSame(swan, swan2)); // should return true
 		swan = testClearLow(swan);
 		System.out.println("Swan and swan2 are the same (after clearLow run on swan): " + isSame(swan, swan2)); // should return false
+
+
+		// Following tests findDifferences()
+		Picture arch = new Picture("arch.jpg");
+		Picture archh = new Picture("arch.jpg");
+		Picture koala = new Picture("koala.jpg");
+		Picture robot1 = new Picture("robot.jpg");
+		ArrayList<Point> pointList = findDifferences(arch, archh);
+		System.out.println("PointList after comparing two identical pictures has a size of: " + pointList.size());
+		pointList = findDifferences(arch, koala);
+		System.out.println("PointList after comparing two different sized pictures has a size of " + pointList.size()); 
+		Picture arch2 = hidePicture(arch, robot1, 65, 102);
+		pointList = findDifferences(arch, arch2);
+		System.out.println("Pointlist after hiding a picture has a size of " + pointList.size());
+		arch.show();
+		arch2.show(); 
     }
+}
+
+
+/** 
+ * Point class that holds coordinates
+ */
+
+class Point {
+	
+	private int x;
+	private int y;
+
+	public Point(int x, int y) {
+
+		this.x = x; 
+		this.y = y; 
+	}
+
+	public int getX() {
+
+		return x; 
+	}
+
+	public int getY() {
+
+		return y;
+	}
+
+	public void setX(int x) {
+
+		this.x = x;
+	}
+
+	public void setY(int y) {
+
+		this.y = y; 
+	}
 }
