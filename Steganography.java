@@ -331,12 +331,11 @@ public class Steganography {
 
 			if (codes.get(i) == 27) {
 
-				result = result + 1; 
+				result += " "; 
 
 			} else {
 
-				result = result +
-					alpha.substring(codes.get(i)-1,codes.get(i));
+				result += alpha.substring(codes.get(i)-1,codes.get(i));
 			}
 		}
 
@@ -367,7 +366,7 @@ public class Steganography {
 
 
 	/** 
-	 * Hide a string (msut be only capital letters and spaces) in a
+	 * Hide a string (must be only capital letters and spaces) in a
 	 * picture.
 	 * The string always starts in the upper left corner.
 	 * @param source picture to hide string in
@@ -394,13 +393,11 @@ public class Steganography {
 					sourceArr[row][col].setRed(sourceArr[row][col].getRed() + bitsPairs[0]);
 					sourceArr[row][col].setGreen(sourceArr[row][col].getGreen() + bitsPairs[1]);
 					sourceArr[row][col].setBlue(sourceArr[row][col].getBlue() + bitsPairs[2]);
-					System.out.println("Hide successful, count = " + count);
 
 				} else {
 
 					// sets all rgb values to 0
 					clearLow(sourceArr[row][col]);
-					System.out.println("Break successful");
 					break; 
 				}
 
@@ -409,8 +406,6 @@ public class Steganography {
 		}
 	}
 
-
-	// Everything above works
 	
 	/** 
 	 * Returns a string hidden in a picture
@@ -421,32 +416,31 @@ public class Steganography {
 	public static String revealText(Picture source) {
 		
 		String hiddenText = ""; 
-		Pixel[][] sourcePixels = source.getPixels2D();
-		boolean stop = false; 
+		Pixel[][] sourcePixels = source.getPixels2D(); 
 		ArrayList<Integer> encodedString = new ArrayList<Integer>();
+		boolean onOff = false; 
 
 		for (int row = 0; row < sourcePixels.length; row++) {
 
 			for (int col = 0; col < sourcePixels[row].length; col++) {
 
-				int red = sourcePixels[row][col].getRed();
-				int green = sourcePixels[row][col].getGreen();
-				int blue = sourcePixels[row][col].getBlue();
+				int red = sourcePixels[row][col].getRed() % 4;
+				int green = sourcePixels[row][col].getGreen() % 4;
+				int blue = sourcePixels[row][col].getBlue() % 4;
 
 				int combined = red + (green * 4) + (blue * 16); 
-
+				
 				if (combined == 0) {
 
-					stop = true; 
-					break;
+					onOff = true; 
+					break; 
 				}
 
 				encodedString.add(combined); 
 			}
 
-			if (stop) break; 
+			if (onOff) break; 
 		}
-		
 		
 		hiddenText = decodeString(encodedString); 
 		return hiddenText; 
@@ -531,11 +525,8 @@ public class Steganography {
 
 		// Lab 4 begins here
 		Picture barbaraS = new Picture("barbaraS.jpg"); 
-		String hide = "Good morning"; 
+		String hide = "good morning this project is very hard and I love linux"; 
 		hideText(barbaraS, hide);
-
-		// Everything above works
-
 		System.out.println(revealText(barbaraS));
     }
 }
