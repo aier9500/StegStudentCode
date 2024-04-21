@@ -1,6 +1,3 @@
-// Eugenio Wu
-// S23: Steganography Lab A1
-
 import java.awt.Color;
 import java.util.ArrayList;
 
