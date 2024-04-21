@@ -410,6 +410,49 @@ public class Steganography {
 	}
 
 
+	// Everything above works
+	
+	/** 
+	 * Returns a string hidden in a picture
+	 * @param source picture with hidden string
+	 * @return revealed string
+	 */
+
+	public static String revealText(Picture source) {
+		
+		String hiddenText = ""; 
+		Pixel[][] sourcePixels = source.getPixels2D();
+		boolean stop = false; 
+		ArrayList<Integer> encodedString = new ArrayList<Integer>();
+
+		for (int row = 0; row < sourcePixels.length; row++) {
+
+			for (int col = 0; col < sourcePixels[row].length; col++) {
+
+				int red = sourcePixels[row][col].getRed();
+				int green = sourcePixels[row][col].getGreen();
+				int blue = sourcePixels[row][col].getBlue();
+
+				int combined = red + (green * 4) + (blue * 16); 
+
+				if (combined == 0) {
+
+					stop = true; 
+					break;
+				}
+
+				encodedString.add(combined); 
+			}
+
+			if (stop) break; 
+		}
+		
+		
+		hiddenText = decodeString(encodedString); 
+		return hiddenText; 
+	}
+
+
 	public static void main(String[] args) {
 
 		
@@ -490,6 +533,10 @@ public class Steganography {
 		Picture barbaraS = new Picture("barbaraS.jpg"); 
 		String hide = "Good morning"; 
 		hideText(barbaraS, hide);
+
+		// Everything above works
+
+		System.out.println(revealText(barbaraS));
     }
 }
 
