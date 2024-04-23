@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  * This program asks the user for a picture  within this package (you can add a picture)
@@ -25,6 +23,10 @@ public class Barbenheimer {
         Picture oppenheimer = oppenheimer(whichPic);
         barbie.explore();
         oppenheimer.explore();
+
+        Picture altHeimer = altHeimer(whichPic);
+        altHeimer.explore();
+        
     }
 
     /**
@@ -32,7 +34,7 @@ public class Barbenheimer {
      * @param howPink int variable specifying how intense the pink hue will be
      * @return a picture with pink Barbie hue according to the intensity specified by howPink
      */
-    
+
     public static Picture barbie(String whichPic, int howPink) {
 
         Picture barbie = new Picture(whichPic);
@@ -85,4 +87,35 @@ public class Barbenheimer {
 
         return oppenheimer; 
     }
+
+    // Below is a versino of oppenheimer() made using while loops
+    
+    public static Picture altHeimer(String whichPic) {
+        
+        Picture oppenheimer = new Picture(whichPic);
+
+        Pixel[][] oppenPixels = oppenheimer.getPixels2D();
+
+        int row = 0; 
+
+        while (row < oppenPixels.length) {
+
+            int col = 0; 
+
+            while (col < oppenPixels[row].length) {
+
+                int average = (oppenPixels[row][col].getRed() + oppenPixels[row][col].getGreen() + oppenPixels[row][col].getBlue()) / 3; 
+                oppenPixels[row][col].setRed(average);
+                oppenPixels[row][col].setGreen(average);
+                oppenPixels[row][col].setBlue(average);
+                col++; 
+            }
+        
+            row++;
+        }
+        
+        return oppenheimer;
+    }
+        
+    
 }
