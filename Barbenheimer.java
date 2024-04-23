@@ -28,7 +28,6 @@ public class Barbenheimer {
     }
 
     /**
-     * 
      * @param whichPic 
      * @param howPink int variable specifying how intense the pink hue will be
      * @return a picture with pink Barbie hue according to the intensity specified by howPink
@@ -37,12 +36,35 @@ public class Barbenheimer {
 
         Picture barbie = new Picture(whichPic);
         
+        Pixel[][] barbiePixels = barbie.getPixels2D(); 
+
         // The hue we are going to use is R246, G88, B184
 
+        int r = 245; 
+        int g = 88; 
+        int b = 184; 
+
+        for (Pixel[] row : barbiePixels) {
+
+            for (Pixel col : row) {
+
+                int newR = (col.getRed() + (r * howPink)) / (howPink + 1); 
+                int newG = (col.getGreen() + (g * howPink)) / (howPink + 1); 
+                int newB = (col.getBlue() + (b * howPink)) / (howPink + 1); 
+                col.setRed(newR);
+                col.setGreen(newG);
+                col.setBlue(newB);
+            }
+        }
 
         return barbie; 
     }
     
+    /**
+     * @param whichPic
+     * @return a grayscale picture
+     */
+
     public static Picture oppenheimer(String whichPic) {
 
         Picture oppenheimer = new Picture(whichPic); 
@@ -59,7 +81,6 @@ public class Barbenheimer {
                 col.setBlue(average);
             }
         }
-
 
         return oppenheimer; 
     }
