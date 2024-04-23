@@ -36,7 +36,8 @@ public class Barbenheimer {
     public static Picture barbie(String whichPic, int howPink) {
 
         Picture barbie = new Picture(whichPic);
-
+        
+        // The hue we are going to use is R246, G88, B184
 
 
         return barbie; 
@@ -46,6 +47,18 @@ public class Barbenheimer {
 
         Picture oppenheimer = new Picture(whichPic); 
 
+        Pixel[][] oppenPixels = oppenheimer.getPixels2D();
+
+        for (Pixel[] row : oppenPixels) {
+
+            for (Pixel col : row) {
+                
+                int average = (col.getRed() + col.getGreen() + col.getBlue()) / 3; 
+                col.setRed(average);
+                col.setGreen(average);
+                col.setBlue(average);
+            }
+        }
 
 
         return oppenheimer; 
