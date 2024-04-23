@@ -33,16 +33,73 @@ public class Barbenheimer {
      * @param howPink int variable specifying how intense the pink hue will be
      * @return a picture with pink Barbie hue according to the intensity specified by howPink
      */
-    public static Picture barbie(String whichPic, int howPink) {
+  public static Picture barbie(String whichPic, int howPink) {
 
-        Picture barbie = new Picture(whichPic);
-        
         // The hue we are going to use is R246, G88, B184
 
+        Picture barbie = new Picture(whichPic);
+        Pixel[][] barbiePixels = barbie.getPixels2D();
+        
+        double pinkVal = howPink / 100;
+                if (howPink == 5){
+                    pinkVal = 0.8;
+                }
 
+        for (Pixel[] row : barbiePixels){
+            for (Pixel col : row){
+                int redVal = col.getRed() - 246;
+                int greenVal = col.getGreen() - 88;
+                int blueVal = col.getBlue() - 184;
+                
+
+                //Check if the RGB value of the pixel is lower than default pink value of R246, G88, B184
+                //Add the difference if it's lower, subtract if it's higher. Then multiply by pinkVal
+
+                //Check the red value
+                if (col.getRed() == 246){
+                    col.setRed((int)(col.getRed() * pinkVal));
+                }
+                if ( redVal < 0){
+                    col.setRed((int)((col.getRed() + redVal) * pinkVal));
+                }
+                else if (redVal > 0){
+                    col.setRed((int)((col.getRed() - redVal) * pinkVal));
+                }
+
+
+                //Check the green value
+
+                if (col.getGreen() == 88){
+                    col.setGreen((int)(col.getGreen() * pinkVal));
+                }
+                if ( greenVal < 0){
+                    col.setGreen((int)((col.getGreen() + redVal) * pinkVal));
+                }
+                else if (greenVal > 0){
+                    col.setGreen((int)((col.getGreen() - greenVal) * pinkVal));
+                }
+
+                //Check the blue value
+                if (col.getBlue() == 184){
+                    col.setBlue((int)(col.getBlue() * pinkVal));
+                }
+                if ( blueVal < 0){
+                    col.setBlue((int)((col.getBlue() + blueVal) * pinkVal));
+                }
+                else if (blueVal > 0){
+                    col.setBlue((int)((col.getBlue() - blueVal) * pinkVal));
+                }
+                
+            }
+          
+        }
         return barbie; 
     }
-    
+
+    /**
+     * @param whichPic 
+     * @return a picture with Oppenheimer hue (gray)
+     */
     public static Picture oppenheimer(String whichPic) {
 
         Picture oppenheimer = new Picture(whichPic); 
