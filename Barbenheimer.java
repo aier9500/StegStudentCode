@@ -21,9 +21,18 @@ public class Barbenheimer {
         int howPink = scan.nextInt(); 
         System.out.println();
         
+        Picture barbie = barbie(whichPic, howPink);
+        Picture oppenheimer = oppenheimer(whichPic);
+        barbie.explore();
+        oppenheimer.explore();
     }
 
-
+    /**
+     * 
+     * @param whichPic 
+     * @param howPink int variable specifying how intense the pink hue will be
+     * @return a picture with pink Barbie hue according to the intensity specified by howPink
+     */
     public static Picture barbie(String whichPic, int howPink) {
 
         Picture barbie = new Picture(whichPic);
@@ -37,7 +46,7 @@ public class Barbenheimer {
 
         Picture oppenheimer = new Picture(whichPic); 
 
-        
+
 
         return oppenheimer; 
     }
