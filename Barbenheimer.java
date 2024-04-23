@@ -32,6 +32,7 @@ public class Barbenheimer {
      * @param howPink int variable specifying how intense the pink hue will be
      * @return a picture with pink Barbie hue according to the intensity specified by howPink
      */
+    
     public static Picture barbie(String whichPic, int howPink) {
 
         Picture barbie = new Picture(whichPic);
